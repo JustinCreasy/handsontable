@@ -24,7 +24,7 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * 
  * Version: 0.37.0
- * Release date: 01/03/2018 (built at 28/02/2018 15:54:52)
+ * Release date: 01/03/2018 (built at 12/03/2018 16:36:45)
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -27777,7 +27777,7 @@ Handsontable.DefaultSettings = _defaultSettings2.default;
 Handsontable.EventManager = _eventManager2.default;
 Handsontable._getListenersCounter = _eventManager.getListenersCounter; // For MemoryLeak tests
 
-Handsontable.buildDate = '28/02/2018 15:54:52';
+Handsontable.buildDate = '12/03/2018 16:36:45';
 Handsontable.packageName = 'handsontable';
 Handsontable.version = '0.37.0';
 
@@ -30189,7 +30189,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_232__;
 /* 233 */
 /***/ (function(module, exports) {
 
-
+// removed by extract-text-webpack-plugin
 
 /***/ }),
 /* 234 */
@@ -39116,6 +39116,48 @@ var ColumnSorting = function (_BasePlugin) {
         }
 
         return 0;
+      };
+    }
+
+    /**
+     * Boolean sorting algorithm.
+     *
+     * @param {Boolean} sortOrder Sorting order (`true` for ascending, `false` for descending).
+     * @param {Object} columnMeta Column meta object.
+     * @returns {Function} The compare function.
+     */
+
+  }, {
+    key: 'booleanSort',
+    value: function booleanSort(sortOrder, columnMeta) {
+      return function (a, b) {
+        if (a[1] !== true && a[1] !== false && b[1] !== true && b[1] !== false) {
+          return 0;
+        }
+
+        if (columnMeta.columnSorting.sortEmptyCells) {
+          if ((0, _mixed.isEmpty)(a[1])) {
+            return sortOrder ? -1 : 1;
+          }
+
+          if ((0, _mixed.isEmpty)(b[1])) {
+            return sortOrder ? 1 : -1;
+          }
+        }
+
+        if (!!a[1] !== a[1]) {
+          return 1;
+        }
+
+        if (!!b[1] !== b[1]) {
+          return -1;
+        }
+
+        if (!!a[1] === !!b[1]) {
+          return 0;
+        }
+
+        return sortOrder ? a[1] - b[1] : b[1] - a[1];
       };
     }
 
