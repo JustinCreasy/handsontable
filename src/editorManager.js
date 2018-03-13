@@ -165,8 +165,21 @@ function EditorManager(instance, priv, selection) {
           // move selection left
           selection.transformStart(-tabMoves.row, -tabMoves.col);
         } else {
-          // move selection right (add a new column if needed)
-          selection.transformStart(tabMoves.row, tabMoves.col, true);
+					/*JENZABAR CUSTOM start: tabbing to new row */
+					var totalRows = instance.countRows();
+					var totalCols = instance.countCols();
+
+					var curRow = priv.selRange.highlight.row;
+					var curCol = priv.selRange.highlight.col;
+
+					if (curRow + 1 === totalRows && curCol + 1 === totalCols) {
+					  selection.transformStart(enterMoves.row, (-1 * totalCols) + 1, true);
+					} else {
+				    ////old code
+				    //// move selection right (add a new column if needed)
+				    selection.transformStart(tabMoves.row, tabMoves.col, true);
+					}
+				/*JENZABAR CUSTOM end: tabbing to new row */
         }
         event.preventDefault();
         stopPropagation(event);
