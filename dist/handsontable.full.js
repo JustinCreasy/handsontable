@@ -24,7 +24,7 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * 
  * Version: 0.37.0
- * Release date: 01/03/2018 (built at 13/03/2018 11:31:20)
+ * Release date: 01/03/2018 (built at 13/03/2018 11:58:00)
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -34522,9 +34522,10 @@ var Overlays = function () {
     key: 'onTableScroll',
     value: function onTableScroll(event) {
       // if mobile browser, do not update scroll positions, as the overlays are hidden during the scroll
-      if ((0, _browser.isMobileBrowser)()) {
-        return;
-      }
+      /*JENZABAR CUSTOM: commented out mobile logic */
+      //if (isMobileBrowser()) {
+      //  return;
+      //}
       var masterHorizontal = this.leftOverlay.mainTableScrollableElement;
       var masterVertical = this.topOverlay.mainTableScrollableElement;
       var target = event.target;
@@ -45280,7 +45281,7 @@ Handsontable.DefaultSettings = _defaultSettings2.default;
 Handsontable.EventManager = _eventManager2.default;
 Handsontable._getListenersCounter = _eventManager.getListenersCounter; // For MemoryLeak tests
 
-Handsontable.buildDate = '13/03/2018 11:31:20';
+Handsontable.buildDate = '13/03/2018 11:58:00';
 Handsontable.packageName = 'handsontable';
 Handsontable.version = '0.37.0';
 
