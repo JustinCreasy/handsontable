@@ -24,7 +24,7 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * 
  * Version: 0.37.0
- * Release date: 01/03/2018 (built at 12/03/2018 16:36:45)
+ * Release date: 01/03/2018 (built at 13/03/2018 11:31:20)
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -45280,7 +45280,7 @@ Handsontable.DefaultSettings = _defaultSettings2.default;
 Handsontable.EventManager = _eventManager2.default;
 Handsontable._getListenersCounter = _eventManager.getListenersCounter; // For MemoryLeak tests
 
-Handsontable.buildDate = '12/03/2018 16:36:45';
+Handsontable.buildDate = '13/03/2018 11:31:20';
 Handsontable.packageName = 'handsontable';
 Handsontable.version = '0.37.0';
 
@@ -61400,6 +61400,7 @@ var ColumnSorting = function (_BasePlugin) {
         return 0;
       };
     }
+    /*JENZABAR CUSTOM start: added booleanSort method */
 
     /**
      * Boolean sorting algorithm.
@@ -61442,6 +61443,7 @@ var ColumnSorting = function (_BasePlugin) {
         return sortOrder ? a[1] - b[1] : b[1] - a[1];
       };
     }
+    /*JENZABAR CUSTOM end: added booleanSort method */
 
     /**
      * Perform the sorting.
@@ -61488,6 +61490,11 @@ var ColumnSorting = function (_BasePlugin) {
           case 'numeric':
             sortFunction = this.numericSort;
             break;
+          /*JENZABAR CUSTOM start: added booleanSort method */
+          case 'checkbox':
+            sortFunction = this.booleanSort;
+            break;
+          /*JENZABAR CUSTOM end: added booleanSort method */
           default:
             sortFunction = this.defaultSort;
         }

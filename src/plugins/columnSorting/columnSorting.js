@@ -418,7 +418,8 @@ class ColumnSorting extends BasePlugin {
       return 0;
     };
   }
-
+/*JENZABAR CUSTOM start: added booleanSort method */
+  
   /**
    * Boolean sorting algorithm.
    *
@@ -457,6 +458,7 @@ class ColumnSorting extends BasePlugin {
             return sortOrder ? (a[1] - b[1]) : (b[1] - a[1]);
         };
     }
+  /*JENZABAR CUSTOM end: added booleanSort method */
 
   /**
    * Perform the sorting.
@@ -501,6 +503,11 @@ class ColumnSorting extends BasePlugin {
         case 'numeric':
           sortFunction = this.numericSort;
           break;
+		/*JENZABAR CUSTOM start: added booleanSort method */
+		case 'checkbox':
+			sortFunction = this.booleanSort;
+		break;
+		/*JENZABAR CUSTOM end: added booleanSort method */
         default:
           sortFunction = this.defaultSort;
       }
