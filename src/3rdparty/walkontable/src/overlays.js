@@ -269,9 +269,10 @@ class Overlays {
    */
   onTableScroll(event) {
     // if mobile browser, do not update scroll positions, as the overlays are hidden during the scroll
-    if (isMobileBrowser()) {
-      return;
-    }
+    /*JENZABAR CUSTOM: commented out mobile logic */
+	//if (isMobileBrowser()) {
+    //  return;
+    //}
     const masterHorizontal = this.leftOverlay.mainTableScrollableElement;
     const masterVertical = this.topOverlay.mainTableScrollableElement;
     const target = event.target;
