@@ -339,7 +339,7 @@ class Selection {
    * @return {Boolean} `true` if the corner element has to be visible, `false` otherwise.
    */
   isAreaCornerVisible(layerLevel) {
-    if (layerLevel !== this.selectedRange.ranges.length - 1) {
+    if (Number.isInteger(layerLevel) && layerLevel !== this.selectedRange.ranges.length - 1) {
       return false;
     }
 
