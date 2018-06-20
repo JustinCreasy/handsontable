@@ -906,7 +906,7 @@ describe('TextEditor', () => {
     expect(top).toEqual($inputHolder.offset().top + 1);
   });
 
-  it('should open editor at the same coordinates as the edited cell after the table had been scrolled (left)', () => {
+  it('should open editor at the same coordinates as the edited cell after the table had been scrolled (left)', async () => {
     var hot = handsontable({
       data: Handsontable.helper.createSpreadsheetData(50, 50),
       fixedColumnsLeft: 2,
@@ -918,10 +918,12 @@ describe('TextEditor', () => {
     $holder.scrollTop(500);
     $holder.scrollLeft(500);
 
-    hot.render();
+    await sleep(100);
 
-    // left
     selectCell(6, 1);
+
+    await sleep(100);
+
     var currentCell = hot.getCell(6, 1, true);
     var left = $(currentCell).offset().left;
     var top = $(currentCell).offset().top;
