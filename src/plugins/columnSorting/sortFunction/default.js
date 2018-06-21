@@ -50,6 +50,9 @@ export default function defaultSort(sortOrder, columnMeta) {
       return sortOrder ? -1 : 1;
 
     } else if (!(isNaN(a[1]) || isNaN(b[1]))) {
+			
+			/*JENZABAR CUSTOM: start */
+			
       //a[1] = parseFloat(a[1]);
       //b[1] = parseFloat(b[1]);
 			if(typeof a[1] == 'boolean' ){
@@ -66,6 +69,8 @@ export default function defaultSort(sortOrder, columnMeta) {
       {
         b[1] = parseFloat(b[1]);
       }
+			
+			/*JENZABAR CUSTOM: stop */
     }
     if (a[1] < b[1]) {
       return sortOrder ? -1 : 1;
