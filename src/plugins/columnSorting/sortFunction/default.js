@@ -50,8 +50,22 @@ export default function defaultSort(sortOrder, columnMeta) {
       return sortOrder ? -1 : 1;
 
     } else if (!(isNaN(a[1]) || isNaN(b[1]))) {
-      a[1] = parseFloat(a[1]);
-      b[1] = parseFloat(b[1]);
+      //a[1] = parseFloat(a[1]);
+      //b[1] = parseFloat(b[1]);
+			if(typeof a[1] == 'boolean' ){
+				a[1] = a[1] ? 1 :0 ;
+			}
+			else
+			{
+				a[1] = parseFloat(a[1]);
+			}
+			if(typeof b[1] == 'boolean' ){
+      	b[1] = b[1] ? 1 :0 ;
+      }
+      else
+      {
+        b[1] = parseFloat(b[1]);
+      }
     }
     if (a[1] < b[1]) {
       return sortOrder ? -1 : 1;
