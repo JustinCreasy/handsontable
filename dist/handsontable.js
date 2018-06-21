@@ -24,7 +24,7 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * 
  * Version: 2.0.0
- * Release date: 11/04/2018 (built at 10/04/2018 11:38:33)
+ * Release date: 11/04/2018 (built at 20/06/2018 17:01:13)
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -8217,7 +8217,7 @@ var onBeforeKeyDown = function onBeforeKeyDown(event) {
   }
 
   if ([_unicode.KEY_CODES.ARROW_UP, _unicode.KEY_CODES.ARROW_RIGHT, _unicode.KEY_CODES.ARROW_DOWN, _unicode.KEY_CODES.ARROW_LEFT].indexOf(event.keyCode) === -1) {
-    that.autoResize.resize(String.fromCharCode(event.keyCode));
+    that.autoResize.resize(event.key);
   }
 };
 
@@ -11332,21 +11332,28 @@ function Core(rootElement, userSettings) {
    * @param {String} [source] String that identifies how this change will be described in the changes array (useful in onAfterChange or onBeforeChange callback).
    */
   this.setDataAtCell = function (row, col, value, source) {
-    var input = setDataInputToArray(row, col, value),
+    var inputs = setDataInputToArray(row, col, value),
         i,
         ilen,
         changes = [],
         prop;
 
-    for (i = 0, ilen = input.length; i < ilen; i++) {
-      if (_typeof(input[i]) !== 'object') {
+    for (i = 0, ilen = inputs.length; i < ilen; i++) {
+      var input = inputs[i];
+      if ((typeof input === 'undefined' ? 'undefined' : _typeof(input)) !== 'object') {
         throw new Error('Method `setDataAtCell` accepts row number or changes array of arrays as its first parameter');
       }
-      if (typeof input[i][1] !== 'number') {
+      if (typeof input[1] !== 'number') {
         throw new Error('Method `setDataAtCell` accepts row and column number as its parameters. If you want to use object property name, use method `setDataAtRowProp`');
       }
-      prop = datamap.colToProp(input[i][1]);
-      changes.push([input[i][0], prop, dataSource.getAtCell(recordTranslator.toPhysicalRow(input[i][0]), input[i][1]), input[i][2]]);
+      var previousValue = dataSource.getAtCell(recordTranslator.toPhysicalRow(input[0]), input[1]);
+      prop = datamap.colToProp(input[1]);
+      var newValue = input[2];
+
+      if (previousValue === newValue) {
+        return;
+      }
+      changes.push([input[0], prop, previousValue, newValue]);
     }
 
     if (!source && (typeof row === 'undefined' ? 'undefined' : _typeof(row)) === 'object') {
@@ -28756,11 +28763,11 @@ Handsontable.DefaultSettings = _defaultSettings2.default;
 Handsontable.EventManager = _eventManager2.default;
 Handsontable._getListenersCounter = _eventManager.getListenersCounter; // For MemoryLeak tests
 
-Handsontable.buildDate = '10/04/2018 11:38:33';
+Handsontable.buildDate = '20/06/2018 17:01:13';
 Handsontable.packageName = 'handsontable';
 Handsontable.version = '2.0.0';
 
-var baseVersion = undefined;
+var baseVersion = '';
 
 if (baseVersion) {
   Handsontable.baseVersion = baseVersion;
@@ -30613,10 +30620,8 @@ function autoResize() {
       resize = function resize(newChar) {
     var width, scrollHeight;
 
-    if (!newChar) {
-      newChar = "";
-    } else if (!/^[a-zA-Z \.,\\\/\|0-9]$/.test(newChar)) {
-      newChar = ".";
+    if (!/^[a-zA-Z \.,\\\/\|0-9]$/.test(newChar)) {
+      newChar = " ";
     }
 
     if (text.textContent !== void 0) {
@@ -30629,7 +30634,7 @@ function autoResize() {
     span.style.whiteSpace = "pre";
 
     body.appendChild(span);
-    width = span.clientWidth + 2;
+    width = span.clientWidth;
     body.removeChild(span);
 
     el.style.height = defaults.minHeight + 'px';
@@ -30722,12 +30727,7 @@ function autoResize() {
     }
 
     if (doObserve) {
-      observe(el, 'change', resize);
-      observe(el, 'cut', delayedResize);
-      observe(el, 'paste', delayedResize);
-      observe(el, 'drop', delayedResize);
-      observe(el, 'keydown', delayedResize);
-      observe(el, 'focus', resize);
+      observe(el, 'input', resize);
     }
 
     resize();
@@ -30742,12 +30742,7 @@ function autoResize() {
       _init(el_, config, doObserve);
     },
     unObserve: function unObserve() {
-      _unObserve(el, 'change', resize);
-      _unObserve(el, 'cut', delayedResize);
-      _unObserve(el, 'paste', delayedResize);
-      _unObserve(el, 'drop', delayedResize);
-      _unObserve(el, 'keydown', delayedResize);
-      _unObserve(el, 'focus', resize);
+      _unObserve(el, 'input', resize);
     },
     resize: resize
   };
@@ -39626,7 +39621,7 @@ var ColumnSorting = function (_BasePlugin) {
         return _this3.onAfterUpdateSettings();
       });
       this.addHook('afterGetColHeader', function (col, TH) {
-        return _this3.getColHeader(col, TH);
+        return _this3.onAfterGetColHeader(col, TH);
       });
       this.addHook('afterOnCellMouseDown', function (event, target) {
         return _this3.onAfterOnCellMouseDown(event, target);
@@ -39691,7 +39686,7 @@ var ColumnSorting = function (_BasePlugin) {
         sortingOrder = loadedSortingState.sortOrder;
       }
       if (typeof sortingColumn === 'number') {
-        this.lastSortedColumn = sortingColumn;
+        this.lastSortedColumn = this.hot.runHooks('modifyCol', sortingColumn);
         this.sortByColumn(sortingColumn, sortingOrder);
       }
     }
@@ -39723,6 +39718,14 @@ var ColumnSorting = function (_BasePlugin) {
 
       this.hot.sortColumn = col;
     }
+
+    /**
+     * Sorted data by column and order info
+     *
+     * @param {number} col Sorted visual column index.
+     * @param {boolean|undefined} order Sorting order (`true` for ascending, `false` for descending).
+     */
+
   }, {
     key: 'sortByColumn',
     value: function sortByColumn(col, order) {
@@ -40154,8 +40157,10 @@ var ColumnSorting = function (_BasePlugin) {
      */
 
   }, {
-    key: 'getColHeader',
-    value: function getColHeader(col, TH) {
+    key: 'onAfterGetColHeader',
+    value: function onAfterGetColHeader(col, TH) {
+      col = this.hot.runHooks('modifyCol', col);
+
       if (col < 0 || !TH.parentNode) {
         return false;
       }
@@ -40303,16 +40308,15 @@ var ColumnSorting = function (_BasePlugin) {
       if (coords.row > -1) {
         return;
       }
+      var colPhysical = this.hot.runHooks('modifyCol', coords.col);
 
       if ((0, _element.hasClass)(event.realTarget, 'columnSorting')) {
         // reset order state on every new column header click
-        if (coords.col !== this.lastSortedColumn) {
+        if (colPhysical !== this.lastSortedColumn) {
           this.hot.sortOrder = true;
         }
-
-        this.lastSortedColumn = coords.col;
-
-        this.sortByColumn(coords.col);
+        var colVisual = this.hot.runHooks('unmodifyCol', colPhysical);
+        this.sortByColumn(colVisual);
       }
     }
   }]);
