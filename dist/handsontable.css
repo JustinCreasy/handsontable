@@ -23,8 +23,8 @@
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * 
- * Version: 3.0.0
- * Release date: 16/05/2018 (built at 21/06/2018 13:21:30)
+ * Version: 4.0.0
+ * Release date: 13/06/2018 (built at 12/06/2018 11:47:13)
  */
 /**
  * Fix for bootstrap styles
@@ -184,47 +184,7 @@
   white-space: pre-line;
   /* preserve new line character in cell */
   background-clip: padding-box;
-	
-	/*JENZABAR CUSTOM: */
-  word-wrap: break-word;
 }
-
-/*JENZABAR CUSTOM: start */
-.handsontable td.success {
-    border: 1px solid #007504 !important;
-    background-color: #def8df !important;
-    color: #000000;
-}
-
-.handsontable td.danger {
-    border: 1px solid #ba0000 !important;
-    background-color: #ffd5d5 !important;
-    color: #000000;
-}
-
-.handsontable td.caution {
-    border: 1px solid #965800 !important;
-    background-color: #FFEED2 !important;
-    color: #000000;
-}
-
-.handsontable td.danger2 {
-    border: 5px solid #ba0000 !important;
-    background-color: #F1F1F1 !important;
-    color: #000000;
-}
-
-.ht_clone_bottom tr:first-child td, .ht_clone_bottom_left_corner tr:first-child td/*, .ht_clone_bottom_left_corner tr:first-child th*/ {
-    border-top: 1px solid #000000 !important;
-    font-weight: bold;
-    color: #000;
-}
-
-.ht_clone_bottom_left_corner tr:first-child th {
-    border-top: 1px solid #000000 !important;
-    font-weight: bold;
-}
-/*JENZABAR CUSTOM: end */
 
 .handsontable td.htInvalid {
   background-color: #ff4c42 !important; /*gives priority over td.area selection background*/
@@ -277,21 +237,12 @@
   border-bottom-width: 0;
 }
 
-/*.handsontable th {
+.handsontable th {
   background-color: #f3f3f3;
   color: #222;
   text-align: center;
   font-weight: normal;
   white-space: nowrap;
-}*/
-
-.handsontable th {
-    /*JENZABAR CUSTOM: */
-    background-color: #F3F3F3;
-    color: #000000;
-    text-align: center;
-    font-weight: normal;
-    white-space: nowrap;
 }
 
 .handsontable thead th {
@@ -303,24 +254,6 @@
 }
 .handsontable thead th .relative {
   padding: 2px 4px;
-}
-
-/* selection */
-.handsontable tbody th.ht__highlight,
-.handsontable thead th.ht__highlight {
-  /* JENZABAR CUSTOM: */
-  /*background-color: #dcdcdc;*/
-  background-color: #d2d6db;
-}
-.handsontable.ht__selection--columns thead th.ht__highlight,
-.handsontable.ht__selection--rows tbody th.ht__highlight {
-  background-color: #8eb0e7;
-  color: #000;
-}
-
-.handsontable td.highlight {
-    /* JENZABAR CUSTOM: */ 
-    background-color: #FFF;
 }
 
 #hot-display-license-info {
@@ -414,20 +347,10 @@
 .handsontable .wtBorder {
   position: absolute;
   font-size: 0;
-	/*JENZABAR CUSTOM:*/
-  background-color: rgba(82, 168,236,.8) !important;
 }
 .handsontable .wtBorder.hidden{
   display:none !important;
 }
-
-/*JENZABAR CUSTOM BEGIN:*/
-.handsontable .wtBorder.success {
-    position: absolute;
-    font-size: 0;
-    background-color: #007504 !important;
-}
-/*JENZABAR CUSTOM END*/
 
 .handsontable td.area,
 .handsontable td.area-1,
@@ -522,9 +445,9 @@
 }
 
 .handsontableInput {
-  border:none;
+  border: none;
   outline-width: 0;
-  margin: 0 ;
+  margin: 0;
   padding: 1px 5px 0 5px;
   font-family: inherit;
   line-height: 21px;
@@ -1102,228 +1025,6 @@ thead .htCollapseButton:after {
   animation-fill-mode: forwards;
   -webkit-animation-fill-mode: forwards;
 }
-@charset "UTF-8";
-
-/*!
- * Pikaday
- * Copyright © 2014 David Bushell | BSD & MIT license | http://dbushell.com/
- */
-
-.pika-single {
-    z-index: 9999;
-    display: block;
-    position: relative;
-    color: #333;
-    background: #fff;
-    border: 1px solid #ccc;
-    border-bottom-color: #bbb;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
-
-/*
-clear child float (pika-lendar), using the famous micro clearfix hack
-http://nicolasgallagher.com/micro-clearfix-hack/
-*/
-.pika-single:before,
-.pika-single:after {
-    content: " ";
-    display: table;
-}
-.pika-single:after { clear: both }
-.pika-single { *zoom: 1 }
-
-.pika-single.is-hidden {
-    display: none;
-}
-
-.pika-single.is-bound {
-    position: absolute;
-    box-shadow: 0 5px 15px -5px rgba(0,0,0,.5);
-}
-
-.pika-lendar {
-    float: left;
-    width: 240px;
-    margin: 8px;
-}
-
-.pika-title {
-    position: relative;
-    text-align: center;
-}
-
-.pika-label {
-    display: inline-block;
-    *display: inline;
-    position: relative;
-    z-index: 9999;
-    overflow: hidden;
-    margin: 0;
-    padding: 5px 3px;
-    font-size: 14px;
-    line-height: 20px;
-    font-weight: bold;
-    background-color: #fff;
-}
-.pika-title select {
-    cursor: pointer;
-    position: absolute;
-    z-index: 9998;
-    margin: 0;
-    left: 0;
-    top: 5px;
-    filter: alpha(opacity=0);
-    opacity: 0;
-}
-
-.pika-prev,
-.pika-next {
-    display: block;
-    cursor: pointer;
-    position: relative;
-    outline: none;
-    border: 0;
-    padding: 0;
-    width: 20px;
-    height: 30px;
-    /* hide text using text-indent trick, using width value (it's enough) */
-    text-indent: 20px;
-    white-space: nowrap;
-    overflow: hidden;
-    background-color: transparent;
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: 75% 75%;
-    opacity: .5;
-    *position: absolute;
-    *top: 0;
-}
-
-.pika-prev:hover,
-.pika-next:hover {
-    opacity: 1;
-}
-
-.pika-prev,
-.is-rtl .pika-next {
-    float: left;
-    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAeCAYAAAAsEj5rAAAAUklEQVR42u3VMQoAIBADQf8Pgj+OD9hG2CtONJB2ymQkKe0HbwAP0xucDiQWARITIDEBEnMgMQ8S8+AqBIl6kKgHiXqQqAeJepBo/z38J/U0uAHlaBkBl9I4GwAAAABJRU5ErkJggg==');
-    *left: 0;
-}
-
-.pika-next,
-.is-rtl .pika-prev {
-    float: right;
-    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAeCAYAAAAsEj5rAAAAU0lEQVR42u3VOwoAMAgE0dwfAnNjU26bYkBCFGwfiL9VVWoO+BJ4Gf3gtsEKKoFBNTCoCAYVwaAiGNQGMUHMkjGbgjk2mIONuXo0nC8XnCf1JXgArVIZAQh5TKYAAAAASUVORK5CYII=');
-    *right: 0;
-}
-
-.pika-prev.is-disabled,
-.pika-next.is-disabled {
-    cursor: default;
-    opacity: .2;
-}
-
-.pika-select {
-    display: inline-block;
-    *display: inline;
-}
-
-.pika-table {
-    width: 100%;
-    border-collapse: collapse;
-    border-spacing: 0;
-    border: 0;
-}
-
-.pika-table th,
-.pika-table td {
-    width: 14.285714285714286%;
-    padding: 0;
-}
-
-.pika-table th {
-    color: #999;
-    font-size: 12px;
-    line-height: 25px;
-    font-weight: bold;
-    text-align: center;
-}
-
-.pika-button {
-    cursor: pointer;
-    display: block;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    outline: none;
-    border: 0;
-    margin: 0;
-    width: 100%;
-    padding: 5px;
-    color: #666;
-    font-size: 12px;
-    line-height: 15px;
-    text-align: right;
-    background: #f5f5f5;
-}
-
-.pika-week {
-    font-size: 11px;
-    color: #999;
-}
-
-.is-today .pika-button {
-    color: #33aaff;
-    font-weight: bold;
-}
-
-.is-selected .pika-button {
-    color: #fff;
-    font-weight: bold;
-    background: #33aaff;
-    box-shadow: inset 0 1px 3px #178fe5;
-    border-radius: 3px;
-}
-
-.is-inrange .pika-button {
-    background: #D5E9F7;
-}
-
-.is-startrange .pika-button {
-    color: #fff;
-    background: #6CB31D;
-    box-shadow: none;
-    border-radius: 3px;
-}
-
-.is-endrange .pika-button {
-    color: #fff;
-    background: #33aaff;
-    box-shadow: none;
-    border-radius: 3px;
-}
-
-.is-disabled .pika-button,
-.is-outside-current-month .pika-button {
-    pointer-events: none;
-    cursor: default;
-    color: #999;
-    opacity: .3;
-}
-
-.pika-button:hover {
-    color: #fff;
-    background: #ff8000;
-    box-shadow: none;
-    border-radius: 3px;
-}
-
-/* styling for abbr */
-.pika-table abbr {
-    border-bottom: none;
-    cursor: help;
-}
-
 .htCommentCell {
     position: relative;
 }
